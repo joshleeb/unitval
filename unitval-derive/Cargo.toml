@@ -1,0 +1,10 @@
+[package]
+name = "uniteval-derive"
+version = "0.1.0"
+authors = ["Josh Leeb-du Toit <mail@joshleeb.com>"]
+edition = "2018"
+
+[lib]
+proc-macro = true
+
+[dependencies]
