@@ -4,5 +4,10 @@ version = "0.1.0"
 authors = ["Josh Leeb-du Toit <mail@joshleeb.com>"]
 edition = "2018"
 
+description = "Provide values for unit enum variants"
+license = "MIT"
+readme = "../README.md"
+repository = "https://github.com/joshleeb/unitval"
+
 [dependencies]
 unitval-derive = { path = "../unitval-derive" }
