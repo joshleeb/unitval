@@ -1,10 +1,10 @@
 extern crate proc_macro;
 
 use proc_macro2::TokenStream;
-use quote::quote;
 use std::convert::TryFrom;
 use syn::DeriveInput;
 
+mod ast;
 mod precond;
 mod unit;
 
@@ -15,30 +15,10 @@ pub fn unitval_derive(tokens: proc_macro::TokenStream) -> proc_macro::TokenStrea
 }
 
 fn expand_unitval(input: DeriveInput) -> Result<TokenStream, TokenStream> {
-    let ident = input.ident;
-    let enum_data = precond::unit_enum(input.data)?;
+    let enum_data = precond::unit_enum(&input.data)?;
+    let tokens = unit::Tokens::try_from(enum_data)?;
 
-    let unit::Tokens { as_tokens, from_tokens } = unit::Tokens::try_from(enum_data)?;
-    let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
-    Ok(quote! {
-        impl #impl_generics ::unitval::AsUnitVal for #ident #ty_generics #where_clause {
-            fn as_unitval(&self) -> &'static str {
-                match self {
-                    #as_tokens
-                }
-            }
-        }
-
-        impl #impl_generics ::unitval::FromUnitVal for #ident #ty_generics #where_clause {
-            fn from_unitval(value: &str) -> ::std::io::Result<Self> {
-                match value {
-                    #from_tokens
-                    _ => Err(::std::io::Error::new(
-                        ::std::io::ErrorKind::InvalidInput,
-                        format!("unknown unitval {:?} for {}", value, stringify!(#ident)),
-                    ))
-                }
-            }
-        }
-    })
+    let mut ast = ast::impl_as_unit_val(&input, &tokens);
+    ast.extend(ast::impl_from_unit_val(&input, &tokens));
+    Ok(ast)
 }
