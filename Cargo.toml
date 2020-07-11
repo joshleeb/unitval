@@ -3,3 +3,7 @@ members = [
     "unitval",
     "unitval-derive",
 ]
+
+[patch.crates-io]
+unitval = { path = "unitval" }
+unitval-derive = { path = "unitval-derive" }
