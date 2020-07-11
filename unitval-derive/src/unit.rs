@@ -18,13 +18,13 @@ impl Unit {
     pub fn as_unitval_tokens(&self) -> TokenStream {
         let ident = &self.variant.ident;
         let unitval = &self.unitval;
-        quote! { Self::#ident => #unitval }
+        quote! { Self::#ident => #unitval, }
     }
 
     pub fn from_unitval_tokens(&self) -> TokenStream {
         let ident = &self.variant.ident;
         let unitval = &self.unitval;
-        quote! { #unitval => Ok(Self::#ident) }
+        quote! { #unitval => Ok(Self::#ident), }
     }
 }
 

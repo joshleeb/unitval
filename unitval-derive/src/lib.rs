@@ -32,7 +32,7 @@ fn expand_unitval(input: DeriveInput) -> Result<TokenStream, TokenStream> {
         impl #impl_generics ::unitval::FromUnitVal for #ident #ty_generics #where_clause {
             fn from_unitval(value: &str) -> ::std::io::Result<Self> {
                 match value {
-                    #from_tokens,
+                    #from_tokens
                     _ => Err(::std::io::Error::new(
                         ::std::io::ErrorKind::InvalidInput,
                         format!("unknown unitval {:?} for {}", value, stringify!(#ident)),
