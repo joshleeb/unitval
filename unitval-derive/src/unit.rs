@@ -9,12 +9,12 @@ mod tokens;
 
 const ATTR_PATH: &str = "unitval";
 
-struct Unit {
-    variant: Variant,
+struct Unit<'a> {
+    variant: &'a Variant,
     unitval: String,
 }
 
-impl Unit {
+impl<'a> Unit<'a> {
     pub fn as_unitval_tokens(&self) -> TokenStream {
         let ident = &self.variant.ident;
         let unitval = &self.unitval;
@@ -28,10 +28,10 @@ impl Unit {
     }
 }
 
-impl TryFrom<Variant> for Unit {
+impl<'a> TryFrom<&'a Variant> for Unit<'a> {
     type Error = TokenStream;
 
-    fn try_from(value: Variant) -> Result<Self, Self::Error> {
+    fn try_from(value: &'a Variant) -> Result<Self, Self::Error> {
         for attr in value.attrs.iter() {
             let meta = attr.parse_meta().map_err(|e| e.to_compile_error())?;
             let attr_ident = meta.path().get_ident().map(|i| i.to_string());

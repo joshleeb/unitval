@@ -1,7 +1,7 @@
 use proc_macro2::TokenStream;
 use quote::quote_spanned;
 
-pub fn unit_enum(data: syn::Data) -> Result<syn::DataEnum, TokenStream> {
+pub fn unit_enum(data: &syn::Data) -> Result<&syn::DataEnum, TokenStream> {
     match data {
         syn::Data::Enum(enum_data) => {
             all_unit_variants(&enum_data)?;

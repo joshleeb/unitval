@@ -10,14 +10,14 @@ pub struct Tokens {
     pub from_tokens: FromUnitValTokens,
 }
 
-impl TryFrom<DataEnum> for Tokens {
+impl TryFrom<&DataEnum> for Tokens {
     type Error = TokenStream;
 
-    fn try_from(value: DataEnum) -> Result<Self, Self::Error> {
+    fn try_from(value: &DataEnum) -> Result<Self, Self::Error> {
         let mut as_tokens = vec![];
         let mut from_tokens = vec![];
 
-        for variant in value.variants {
+        for variant in &value.variants {
             let unit = Unit::try_from(variant)?;
             as_tokens.push(unit.as_unitval_tokens());
             from_tokens.push(unit.from_unitval_tokens());
