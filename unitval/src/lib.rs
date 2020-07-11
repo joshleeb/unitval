@@ -1,4 +1,5 @@
-pub use unitval_derive::UnitVal;
+#[doc(hidden)]
+pub use unitval_derive::*;
 
 use std::io;
 

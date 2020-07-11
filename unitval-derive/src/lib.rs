@@ -21,7 +21,7 @@ fn expand_unitval(input: DeriveInput) -> Result<TokenStream, TokenStream> {
     let unit::Tokens { as_tokens, from_tokens } = unit::Tokens::try_from(enum_data)?;
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
     Ok(quote! {
-        impl #impl_generics AsUnitVal for #ident #ty_generics #where_clause {
+        impl #impl_generics ::unitval::AsUnitVal for #ident #ty_generics #where_clause {
             fn as_unitval(&self) -> &'static str {
                 match self {
                     #as_tokens
@@ -29,7 +29,7 @@ fn expand_unitval(input: DeriveInput) -> Result<TokenStream, TokenStream> {
             }
         }
 
-        impl #impl_generics FromUnitVal for #ident #ty_generics #where_clause {
+        impl #impl_generics ::unitval::FromUnitVal for #ident #ty_generics #where_clause {
             fn from_unitval(value: &str) -> ::std::io::Result<Self> {
                 match value {
                     #from_tokens,
