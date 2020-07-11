@@ -12,7 +12,7 @@ pub fn unitval_derive(tokens: proc_macro::TokenStream) -> proc_macro::TokenStrea
 }
 
 fn expand_unitval(input: syn::DeriveInput) -> Result<TokenStream, TokenStream> {
-    let _enum_data = precond::unit_enum(&input.ident, input.data)?;
+    let _enum_data = precond::unit_enum(input.data)?;
 
     let ident = input.ident;
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
