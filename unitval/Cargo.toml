@@ -1,6 +1,6 @@
 [package]
 name = "unitval"
-version = "0.1.3"
+version = "0.2.0"
 authors = ["Josh Leeb-du Toit <mail@joshleeb.com>"]
 edition = "2018"
 
